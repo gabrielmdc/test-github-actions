@@ -16,7 +16,9 @@ jobs:
           REF: ${{github.ref}}
           HEAD_REF: ${{github.head_ref}}
           BASE_REF: ${{github.base_ref}}
+          GITHUB_SHA: ${{GITHUB_SHA}}
         run: |
           echo $REF
           echo $HEAD_REF
           echo $BASE_REF
+          echo $GITHUB_SHA
