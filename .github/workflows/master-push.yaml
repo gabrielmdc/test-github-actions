@@ -13,5 +13,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test commits
         env:
-          REF: ${{github.head_ref}}
-        run: echo $REF
+          REF: ${{github.ref}}
+          HEAD_REF: ${{github.head_ref}}
+        run: |
+          echo $REF
+          echo $HEAD_REF
