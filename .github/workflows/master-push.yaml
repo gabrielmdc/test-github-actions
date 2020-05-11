@@ -21,4 +21,4 @@ jobs:
           echo $REF
           echo $HEAD_REF
           echo $BASE_REF
-          echo $GITHUB_SHA
+          echo $(git rev-parse --short "$GITHUB_SHA")
