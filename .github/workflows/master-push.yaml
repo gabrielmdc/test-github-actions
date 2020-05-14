@@ -28,7 +28,7 @@ jobs:
           echo $HEAD_BRANCH
           git config --global user.email "ci@github.com"
           git config --global user.name "GitHub CI"
-          bash scripts/bump-version.sh "$MESSAGE"
+          bash .github/bump-version.sh "$MESSAGE"
       - name: build project
         id: build_artifact
         run: |
