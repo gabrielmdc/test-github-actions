@@ -6,7 +6,7 @@ on:
       - 'v(\d+\.){2}\d+'
 jobs:
   build:
-    if: github.ref == 'refs/heads/master'
+    # if: github.ref == 'refs/heads/master'
     name: Create Release
     runs-on: ubuntu-latest
     steps:
