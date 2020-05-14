@@ -1,4 +1,4 @@
-#!/usr/bin/env bas
+#!/usr/bin/env bash
 # Increase the version of 'pubspec.yaml'
 # Use sh incr-version.sh [--major|--minor]
 
