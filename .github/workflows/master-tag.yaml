@@ -1,10 +1,9 @@
 name: Master tag
 
 on:
-  push:
-    tags:
-      - "*"
-      - 'v(\d+\.){2}\d+'
+  tags:
+    - "*"
+    - 'v(\d+\.){2}\d+'
 jobs:
   build:
     # if: github.ref == 'refs/heads/master'
