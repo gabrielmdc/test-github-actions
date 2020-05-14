@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  bump_version:
-    name: Bump version
+  build:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,18 +21,7 @@ jobs:
       - name: build project
         id: build_artifact
         run: |
-          zip --junk-paths my-artifact README.md
-  build:
-    needs: bump_version
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: export tags
-        id: tags
-        run: |
-          head -15 pubspec.yaml
-          echo $(git describe --abbrev=0 --tags)
+          zip --junk-paths my-artifact test/test
           echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
       - name: Create Release
@@ -41,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.tags.outputs.tag }}
-          release_name: ${{ steps.tags.outputs.tag_message }}
+          tag_name: ${{ steps.build_artifact.outputs.tag }}
+          release_name: ${{ steps.build_artifact.outputs.tag_message }}
           body: |
             Changes in this Release
             - First Change
