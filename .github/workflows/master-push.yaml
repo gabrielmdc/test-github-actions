@@ -22,14 +22,16 @@ jobs:
         id: build_artifact
         run: |
           zip --junk-paths my-artifact README.md
-          echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
-          echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
   build:
     needs: bump_version
     name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: export tags
+        run: |
+          echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
+          echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
