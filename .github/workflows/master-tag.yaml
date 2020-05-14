@@ -16,7 +16,7 @@ jobs:
       - name: build project
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-          TAG: ${{GITHUB_REF:10}}
+          TAG: ${GITHUB_REF:10}
         run: |
           zip --junk-paths my-artifact README.md
           echo $GITHUB_CONTEXT
