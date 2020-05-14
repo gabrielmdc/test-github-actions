@@ -13,9 +13,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      # - name: build project
-      #   run: |
-      #     zip --junk-paths my-artifact README.md
+      - name: build project
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          zip --junk-paths my-artifact README.md
+          echo $GITHUB_CONTEXT
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
