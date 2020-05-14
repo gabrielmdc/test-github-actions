@@ -32,6 +32,7 @@ jobs:
         id: tags
         run: |
           head -15 pubspec.yaml
+          echo $(git describe --abbrev=0 --tags)
           echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
       - name: Create Release
