@@ -30,20 +30,19 @@ jobs:
           git config --global user.name "GitHub CI"
           bash scripts/bump-version.sh "$MESSAGE"
       - name: build project
+        id: build_artifact
         run: |
           zip --junk-paths my-artifact README.md
-          echo ::set-env name=TAG::$(git describe --abbrev=0 --tags)
-          echo ::set-env name=TAG_MESSAGE::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
+          echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
+          echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-          # TAG: $(git describe --abbrev=0 --tags)
-          # TAG_MESSAGE: ${{ steps.vars.outputs.tag_message }}
         with:
-          tag_name: $TAG
-          release_name: $TAG_NAME
+          tag_name: ${{ steps.build_artifact.outputs.tag }}
+          release_name: ${{ steps.build_artifact.outputs.tag_message }}
           body: |
             Changes in this Release
             - First Change
