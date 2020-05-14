@@ -6,26 +6,15 @@ on:
       - master
 
 jobs:
-  build:
-    name: Test
+  bump_version:
+    name: Bump version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Test commits
         env:
-          REF: ${{github.ref}}
-          HEAD_REF: ${{github.head_ref}}
-          BASE_REF: ${{github.base_ref}}
-          GITHUB_SHA: ${{github.sha}}
-          GITHUB_CONTEXT: ${{ toJson(github) }}
           MESSAGE: ${{github.event.head_commit.message}}
         run: |
-          echo $REF
-          echo $HEAD_REF
-          echo $BASE_REF
-          echo $(git rev-parse --short "$GITHUB_SHA")
-          HEAD_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
-          echo $HEAD_BRANCH
           git config --global user.email "ci@github.com"
           git config --global user.name "GitHub CI"
           bash .github/bump-version.sh "$MESSAGE"
@@ -35,6 +24,12 @@ jobs:
           zip --junk-paths my-artifact README.md
           echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
+  build:
+    needs: bump_version
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

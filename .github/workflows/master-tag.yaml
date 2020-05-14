@@ -1,12 +1,12 @@
 name: Master tag
 
 on:
-  tags:
-    - "*"
-    - 'v(\d+\.){2}\d+'
+  push:
+    tags:
+      - "*"
+      - 'v(\d+\.){2}\d+'
 jobs:
   build:
-    # if: github.ref == 'refs/heads/master'
     name: Create Release
     runs-on: ubuntu-latest
     steps:
