@@ -4,10 +4,9 @@ on:
   push:
     tags:
       - 'v(\d+\.){2}\d+'
-    branches:
-      - master
 jobs:
   build:
+    if: github.event.base_ref == 'refs/heads/master'
     name: Create Release
     runs-on: ubuntu-latest
     steps:
