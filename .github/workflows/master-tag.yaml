@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: build project
         run: |
           zip --junk-paths my-artifact README.md
       - name: Create Release
