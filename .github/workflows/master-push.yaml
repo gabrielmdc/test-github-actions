@@ -32,18 +32,18 @@ jobs:
       - name: build project
         run: |
           zip --junk-paths my-artifact README.md
-          echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
-          echo ::set-output name=tag_message::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
+          echo ::set-env name=TAG::$(git describe --abbrev=0 --tags)
+          echo ::set-env name=TAG_MESSAGE::$(git tag -l --format='%(contents)' $(git describe --abbrev=0))
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-          TAG: $(git describe --abbrev=0 --tags)
-          TAG_MESSAGE: ${{ steps.vars.outputs.tag_message }}
+          # TAG: $(git describe --abbrev=0 --tags)
+          # TAG_MESSAGE: ${{ steps.vars.outputs.tag_message }}
         with:
-          tag_name: ${{ steps.vars.outputs.tag }}
-          release_name: ${{ steps.vars.outputs.tag_message }}
+          tag_name: $TAG
+          release_name: $TAG_NAME
           body: |
             Changes in this Release
             - First Change
