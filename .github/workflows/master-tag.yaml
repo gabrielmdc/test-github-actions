@@ -3,6 +3,7 @@ name: Master tag
 on:
   push:
     tags:
+      - "*"
       - 'v(\d+\.){2}\d+'
 jobs:
   build:
