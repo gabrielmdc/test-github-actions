@@ -39,7 +39,7 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-          TAG: ${{ steps.vars.outputs.tag }}
+          TAG: $(git describe --abbrev=0 --tags)
           TAG_MESSAGE: ${{ steps.vars.outputs.tag_message }}
         with:
           tag_name: ${{ steps.vars.outputs.tag }}
