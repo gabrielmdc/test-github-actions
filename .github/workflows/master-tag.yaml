@@ -16,9 +16,11 @@ jobs:
       - name: build project
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+          TAG: ${GITHUB_REF:10}
         run: |
           zip --junk-paths my-artifact README.md
           echo $GITHUB_CONTEXT
+          echo $TAG
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
