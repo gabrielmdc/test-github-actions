@@ -28,4 +28,4 @@ jobs:
           echo $HEAD_BRANCH
           git config --global user.email "ci@github.com"
           git config --global user.name "GitHub CI"
-          sh scripts/bump-version.sh "$MESSAGE"
+          scripts/bump-version.sh "$MESSAGE"
